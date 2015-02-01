@@ -63,7 +63,9 @@ class profile_field_associated extends profile_field_base {
      * @return bool
      */
     public function edit_after_data($mform) {
-        if (!$this->is_visible()) {
+        if ($this->field->visible == PROFILE_VISIBLE_NONE
+          and !has_capability('moodle/user:update', context_system::instance())) {
+
             $associatedfield = $this->field->param1;
             if ($mform->elementExists($associatedfield)) {
                 $mform->removeElement($associatedfield);
