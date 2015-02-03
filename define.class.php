@@ -86,7 +86,8 @@ class profile_define_associated extends profile_define_base {
 
         $error = parent::define_validate_specific($data, $files);
 
-        $fields = $DB->get_records_select('user_info_field', $DB->sql_compare_text('datatype') . " = 'associated' AND " . $DB->sql_compare_text('param1') . "= '{$data->param1}'");
+        $select = $DB->sql_compare_text('datatype') . " = ? AND " . $DB->sql_compare_text('param1') . " = ?";
+        $fields = $DB->get_records_select('user_info_field', $select, array('associated', $data->param1));
 
         foreach ($fields as $field) {
             if ($field->id != $data->id) {
