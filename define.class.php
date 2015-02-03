@@ -73,4 +73,26 @@ class profile_define_associated extends profile_define_base {
         $mform->addHelpButton('signup', 'signup', 'profilefield_associated');
         $mform->setDefault('signup', '1');
     }
+
+    /**
+     * Validate the data from the add/edit profile field form
+     * that is specific to the current data type
+     * @param array $data
+     * @param array $files
+     * @return  array    associative array of error messages
+     */
+    public function define_validate_specific($data, $files) {
+        global $DB;
+
+        $error = parent::define_validate_specific($data, $files);
+
+        $fields = $DB->get_records_select('user_info_field', $DB->sql_compare_text('datatype') . " = 'associated' AND " . $DB->sql_compare_text('param1') . "= '{$data->param1}'");
+
+        foreach ($fields as $field) {
+            if ($field->id != $data->id) {
+                $error['param1'] = get_string('dupplicateassociated', 'profilefield_associated');
+            }
+        }
+        return $error;
+    }
 }
