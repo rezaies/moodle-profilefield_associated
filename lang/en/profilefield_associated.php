@@ -23,7 +23,7 @@
  */
 
 $string['associatedfield'] = 'Associated field';
-$string['dupplicateassociated'] = 'Another custom profile field is already associated with the selected ptofile field.';
+$string['dupplicateassociated'] = 'Another custom profile field is already associated with the selected profile field.';
 $string['pluginname'] = 'Associated input';
 $string['signup'] = 'Display on signup page?';
 $string['signup_help'] = 'If you don\'t want this field to be shown on the signup page, you propably don\'t need to define an associated profile field at all!<br />However, there might be a few cases that you just want to make an optional field required or unique.';
