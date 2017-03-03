@@ -22,6 +22,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 /**
  * Class profile_field_associated
  *
@@ -32,7 +34,7 @@ class profile_field_associated extends profile_field_base {
 
     /**
      * Add fields for editing a associated profile field.
-     * @param moodleform $mform
+     * @param MoodleQuickForm $mform
      */
     public function edit_field_add($mform) {
         $associatedfield = $this->field->param1;
@@ -59,7 +61,7 @@ class profile_field_associated extends profile_field_base {
 
     /**
      * Tweaks the edit form
-     * @param moodleform $mform instance of the moodleform class
+     * @param MoodleQuickForm $mform instance of the moodleform class
      * @return bool
      */
     public function edit_after_data($mform) {
@@ -82,12 +84,23 @@ class profile_field_associated extends profile_field_base {
     public function edit_save_data($usernew) {
         global $DB;
 
-        if (!isset($usernew->{$this->inputname})) {
-            // Field not present in form, probably locked and invisible - skip it.
-            return;
+        $associatedfield = $this->field->param1;
+        $useoriginal = $this->field->param2;
+
+        if ($useoriginal && isset($usernew->{$associatedfield})) {
+            $usernew->{$this->inputname} = $usernew->{$associatedfield};
         }
 
-        $DB->set_field('user', $this->field->param1, $usernew->{$this->inputname}, array('id' => $usernew->id));
+        if (!isset($usernew->{$this->inputname})) {
+            // Field not present in form, probably locked and invisible - skip it.
+            return null;
+        }
+
+        if (!$useoriginal) {    // Preventing 1 redundant update.
+            $DB->set_field('user', $this->field->param1, $usernew->{$this->inputname}, array('id' => $usernew->id));
+        }
+
+        return parent::edit_save_data($usernew);
     }
 
     /**
@@ -104,12 +117,10 @@ class profile_field_associated extends profile_field_base {
         $useoriginal = $this->field->param2;
 
         // Get input value.
-        if (isset($usernew->{$this->inputname})) {
-            $value = $usernew->{$this->inputname};
-        } else if (isset($usernew->{$associatedfield})) {
-            $value = $usernew->{$associatedfield};
+        if ($useoriginal) {
+            $value = isset($usernew->{$associatedfield}) ? $usernew->{$associatedfield} : '';
         } else {
-            $value = '';
+            $value = isset($usernew->{$this->inputname}) ? $usernew->{$this->inputname} : '';
         }
 
         // Check for uniqueness of data if required.
@@ -137,7 +148,7 @@ class profile_field_associated extends profile_field_base {
 
     /**
      * Sets the default data for the field in the form object
-     * @param  moodleform $mform instance of the moodleform class
+     * @param  MoodleQuickForm $mform instance of the moodleform class
      */
     public function edit_field_set_default($mform) {
         $associatedfield = $this->field->param1;
@@ -154,7 +165,7 @@ class profile_field_associated extends profile_field_base {
     /**
      * Sets the required flag for the field in the form object
      *
-     * @param moodleform $mform instance of the moodleform class
+     * @param MoodleQuickForm $mform instance of the moodleform class
      */
     public function edit_field_set_required($mform) {
         global $USER;
@@ -173,7 +184,7 @@ class profile_field_associated extends profile_field_base {
 
     /**
      * HardFreeze the field if locked.
-     * @param moodleform $mform instance of the moodleform class
+     * @param MoodleQuickForm $mform instance of the moodleform class
      */
     public function edit_field_set_locked($mform) {
 

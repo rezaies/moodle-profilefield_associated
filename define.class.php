@@ -22,6 +22,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 /**
  * Class profile_define_associated
  *
@@ -33,7 +35,7 @@ class profile_define_associated extends profile_define_base {
 
     /**
      * Add elements for creating/editing an associated profile field.
-     * @param moodleform $form
+     * @param MoodleQuickForm $form
      */
     public function define_form_specific($form) {
         // Default data.
@@ -67,7 +69,7 @@ class profile_define_associated extends profile_define_base {
 
     /**
      * Alter form based on submitted or existing data
-     * @param moodleform $mform
+     * @param MoodleQuickForm $mform
      */
     public function define_after_data(&$mform) {
         $mform->addHelpButton('signup', 'signup', 'profilefield_associated');
@@ -77,7 +79,7 @@ class profile_define_associated extends profile_define_base {
     /**
      * Validate the data from the add/edit profile field form
      * that is specific to the current data type
-     * @param array $data
+     * @param stdClass $data
      * @param array $files
      * @return  array    associative array of error messages
      */
