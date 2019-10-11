@@ -43,20 +43,22 @@ class profile_define_associated extends profile_define_base {
         $form->setType('defaultdata', PARAM_TEXT);
 
         // Param 1 for associated type detemines which optional element should this be associated to.
-        $targetoptions = array( ''       => get_string('choose'),
-                                'url'       => get_string('webpage'),
-                                'icq' => get_string('icqnumber'),
-                                'skype'  => get_string('skypeid'),
-                                'aim'   => get_string('aimid'),
-                                'yahoo'   => get_string('yahooid'),
-                                'msn'   => get_string('msnid'),
-                                'idnumber'   => get_string('idnumber', ''),
-                                'institution'   => get_string('institution', ''),
-                                'department'   => get_string('department', ''),
-                                'phone1'   => get_string('phone', ''),
-                                'phone2'   => get_string('phone2', ''),
-                                'address'   => get_string('address', '')
-                              );
+        $targetoptions = [
+            ''              => get_string('choose'),
+            'city'		    => get_string('city', ''),
+            'url'           => get_string('webpage'),
+            'icq'           => get_string('icqnumber'),
+            'skype'         => get_string('skypeid'),
+            'aim'           => get_string('aimid'),
+            'yahoo'         => get_string('yahooid'),
+            'msn'           => get_string('msnid'),
+            'idnumber'      => get_string('idnumber', ''),
+            'institution'   => get_string('institution', ''),
+            'department'    => get_string('department', ''),
+            'phone1'        => get_string('phone', ''),
+            'phone2'        => get_string('phone2', ''),
+            'address'       => get_string('address', '')
+        ];
         $form->addElement('select', 'param1', get_string('associatedfield', 'profilefield_associated'), $targetoptions);
         $form->addRule('param1', get_string('required'), 'required', null, 'client');
         $form->setType('param1', PARAM_RAW);
