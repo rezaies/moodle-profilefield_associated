@@ -53,6 +53,7 @@ class profile_define_associated extends profile_define_base {
                                 'idnumber'   => get_string('idnumber', ''),
                                 'institution'   => get_string('institution', ''),
                                 'department'   => get_string('department', ''),
+				'city'		=> get_string('city', ''),
                                 'phone1'   => get_string('phone', ''),
                                 'phone2'   => get_string('phone2', ''),
                                 'address'   => get_string('address', '')
