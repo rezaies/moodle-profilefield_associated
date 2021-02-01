@@ -25,6 +25,11 @@
 $string['associatedfield'] = 'Associated field';
 $string['dupplicateassociated'] = 'Another custom profile field is already associated with the selected profile field.';
 $string['pluginname'] = 'Associated input';
+$string['privacy:metadata:profilefield_associated:userid'] = 'The ID of the user whose data is stored by the associated user profile field';
+$string['privacy:metadata:profilefield_associated:fieldid'] = 'The ID of the profile field';
+$string['privacy:metadata:profilefield_associated:data'] = 'Associated user profile field user data';
+$string['privacy:metadata:profilefield_associated:dataformat'] = 'The format of the associated user profile field user data';
+$string['privacy:metadata:profilefield_associated:tableexplanation'] = 'Additional profile data';
 $string['signup'] = 'Display on signup page?';
 $string['signup_help'] = 'If you don\'t want this field to be shown on the signup page, you propably don\'t need to define an associated profile field at all!<br />However, there might be a few cases that you just want to make an optional field required or unique.';
 $string['useoriginal'] = 'Use original';

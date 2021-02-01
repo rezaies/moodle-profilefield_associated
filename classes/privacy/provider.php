@@ -17,12 +17,12 @@
 /**
  * Privacy class for requesting user data.
  *
- * @package    profilefield_conditional
+ * @package    profilefield_associated
  * @copyright  2021 Shamim Rezaie <shamim@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace profilefield_conditional\privacy;
+namespace profilefield_associated\privacy;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -51,11 +51,11 @@ class provider implements
      */
     public static function get_metadata(collection $collection) : collection {
         return $collection->add_database_table('user_info_data', [
-            'userid' => 'privacy:metadata:profilefield_conditional:userid',
-            'fieldid' => 'privacy:metadata:profilefield_conditional:fieldid',
-            'data' => 'privacy:metadata:profilefield_conditional:data',
-            'dataformat' => 'privacy:metadata:profilefield_conditional:dataformat'
-        ], 'privacy:metadata:profilefield_conditional:tableexplanation');
+            'userid' => 'privacy:metadata:profilefield_associated:userid',
+            'fieldid' => 'privacy:metadata:profilefield_associated:fieldid',
+            'data' => 'privacy:metadata:profilefield_associated:data',
+            'dataformat' => 'privacy:metadata:profilefield_associated:dataformat'
+        ], 'privacy:metadata:profilefield_associated:tableexplanation');
     }
 
     /**
@@ -75,7 +75,7 @@ class provider implements
         $params = [
             'userid' => $userid,
             'contextlevel' => CONTEXT_USER,
-            'datatype' => 'conditional'
+            'datatype' => 'associated'
         ];
         $contextlist = new contextlist();
         $contextlist->add_from_sql($sql, $params);
@@ -104,7 +104,7 @@ class provider implements
 
         $params = [
             'userid' => $context->instanceid,
-            'datatype' => 'conditional'
+            'datatype' => 'associated'
         ];
 
         $userlist->add_from_sql('userid', $sql, $params);
@@ -128,7 +128,7 @@ class provider implements
                         'data' => $result->data
                     ];
                     \core_privacy\local\request\writer::with_context($context)->export_data([
-                        get_string('pluginname', 'profilefield_conditional')], $data);
+                        get_string('pluginname', 'profilefield_associated')], $data);
                 }
             }
         }
@@ -184,7 +184,7 @@ class provider implements
 
         $params = [
             'userid' => $userid,
-            'datatype' => 'conditional'
+            'datatype' => 'associated'
         ];
 
         $DB->delete_records_select('user_info_data', "fieldid IN (
@@ -208,7 +208,7 @@ class provider implements
                        AND uif.datatype = :datatype";
         $params = [
             'userid' => $userid,
-            'datatype' => 'conditional'
+            'datatype' => 'associated'
         ];
 
         return $DB->get_records_sql($sql, $params);
