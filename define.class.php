@@ -45,7 +45,8 @@ class profile_define_associated extends profile_define_base {
         // Param 1 for associated type detemines which optional element should this be associated to.
         $targetoptions = [
             ''              => get_string('choose'),
-            'city'		    => get_string('city', ''),
+            'city'          => get_string('city', ''),
+            'country'       => get_string('country', ''),
             'url'           => get_string('webpage'),
             'icq'           => get_string('icqnumber'),
             'skype'         => get_string('skypeid'),
